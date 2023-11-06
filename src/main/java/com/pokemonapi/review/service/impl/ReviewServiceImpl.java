@@ -28,22 +28,22 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewDto createReview(int pokemonId, ReviewDto reviewDto) {
         Review review = mapToEntity(reviewDto);
 
-        Pokemon pokemon = pokemonRepository.findById(pokemonId).orElseThrow(()->new PokemonNotFoundException("Pokemon with assciated review not found"));
+        Pokemon pokemon = pokemonRepository.findById(pokemonId).orElseThrow(()->new PokemonNotFoundException("Pokemon with associated review not found"));
 
         review.setPokemon(pokemon);
 
         Review newReview = reviewRepository.save(review);
 
-        return matToDto(newReview);
+        return mapToDto(newReview);
     }
 
     @Override
     public List<ReviewDto> getReviewByPokemonId(int id) {
-        List<Review> reviews = reviewRepository.findbyPokemonId(id);
+        List<Review> reviews = reviewRepository.findByPokemonId(id);
 
-        return reviews.stream().map(review -> matToDto(review)).collect(Collectors.toList());
+        return reviews.stream().map(review -> mapToDto(review)).collect(Collectors.toList());
     }
-    private ReviewDto matToDto(Review review){
+    private ReviewDto mapToDto(Review review){
         ReviewDto reviewDto = new ReviewDto();
         reviewDto.setId(review.getId());
         reviewDto.setTitle(review.getTitle());
