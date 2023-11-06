@@ -26,8 +26,8 @@ public class PokemonController {
         return new ResponseEntity<>(pokemonService.getAllPokemons(), HttpStatus.OK);
     }
     @GetMapping("pokemon/{id}")
-    public Pokemon pokemonDeatil(@PathVariable int id){
-        return new Pokemon(id, "squirtle","water");
+    public ResponseEntity<PokemonDto> pokemonDetail(@PathVariable int id){
+       return ResponseEntity.ok(pokemonService.getPokemonById(id));
     }
     @PostMapping("pokemon/create")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -35,15 +35,14 @@ public class PokemonController {
       return new ResponseEntity<>(pokemonService.createPokemon(pokemonDto), HttpStatus.CREATED);
     }
     @PutMapping("pokemon/{id}/update")
-    public ResponseEntity<Pokemon> updatePokemon(@RequestBody Pokemon pokemon, @PathVariable("id") int pokemonId){
-        System.out.println(pokemon.getName());
-        System.out.println(pokemon.getType());
-        return ResponseEntity.ok(pokemon);
+    public ResponseEntity<PokemonDto> updatePokemon(@RequestBody PokemonDto pokemonDto, @PathVariable("id") int pokemonId){
+      PokemonDto response = pokemonService.updatePokemon(pokemonDto, pokemonId);
+      return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("pokemon/{id}/delete")
     public ResponseEntity<String> deletePokemon(@PathVariable("id") int pokemonId){
-        System.out.println(pokemonId);
-        return ResponseEntity.ok("pokemon deleted successfully");
+       pokemonService.deletePokemonId(pokemonId);
+       return new ResponseEntity<>("Pokemon delete", HttpStatus.OK);
 
     }
 }
