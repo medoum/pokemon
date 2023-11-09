@@ -2,6 +2,7 @@ package com.pokemonapi.review.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity
-@NoArgsConstructor
 @AllArgsConstructor
-@Table
+@NoArgsConstructor
+@Builder
+@Entity
 public class Pokemon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
